@@ -14,9 +14,9 @@ app.use('/',(req,res)=>{
     return res.status(404).json({message: "Your requested an api that I dont have :( "})
 });
 
-app.use('/health',(req,res)=>{
-    return res.status(200).json({message: "ok"})
-});
+app.get("/health", function (req, res) {
+	res.sendStatus(200);
+})
 app.listen(PORT, () => {
     console.log(`App is running and Listening on port ${PORT}`);
   });
