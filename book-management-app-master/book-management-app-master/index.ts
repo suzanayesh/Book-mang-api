@@ -1,22 +1,29 @@
-import express from 'express'
-import bookRouter from './routes/book.js'
-import searchRouter from './routes/search.js'
+import express from "express";
+import dotenv from "dotenv";
+import bookRouter from "./routes/search.ts"
+import { loggerMiddleware } from "./middleware/book.ts";
 
+dotenv.config()
 const app = express();
-const PORT =3000;
+const PORT = process.env.PORT || 5000;
+app.use(express.json())
 
-app.use(express.json());
-app.use('/library',bookRouter);
-app.use('/search',searchRouter);
+app.use(loggerMiddleware)
 
-
-app.use('/',(req,res)=>{
-    return res.status(404).json({message: "Your requested an api that I dont have :( "})
-});
-
-app.get("/health", function (req, res) {
-	res.sendStatus(200);
+app.get("/", (req, res) => {
+    res.send("Hello world")
 })
+
+app.get("/health", (req, res) => {
+    res.status(200).send("OK")
+})
+
+app.use("/books", bookRouter)
+
+app.use((req, res) => {
+    res.status(404).send("You requested something does not exist :(");
+})
+
 app.listen(PORT, () => {
-    console.log(`App is running and Listening on port ${PORT}`);
-  });
+    console.log(`Server working on port ${PORT} and host: http://localhost:${PORT}`);
+})
