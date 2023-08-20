@@ -15,7 +15,7 @@ sudo useradd -g app --no-create-home --no-user-group --home-dir /home/app --shel
 sudo usermod --append --groups app github
 
 # deploy app
-repo="Shadi-Almohtaseb/Books-API"
+repo="suzanayesh/Book-mang-api"
 download_url=$(curl "https://api.github.com/repos/$repo/releases/latest" | jq --raw-output '.assets[0].browser_download_url')
 asset_name=$(curl "https://api.github.com/repos/$repo/releases/latest" | jq --raw-output '.assets[0].name')
 
